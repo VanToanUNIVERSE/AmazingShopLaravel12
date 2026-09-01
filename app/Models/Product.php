@@ -17,6 +17,15 @@ class Product extends Model
         'active',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'hot' => 'boolean',
+            'active' => 'boolean',
+            'price' => 'decimal:2',
+        ];
+    }
+
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class);

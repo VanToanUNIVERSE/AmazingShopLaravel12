@@ -12,6 +12,13 @@ class Subcategory extends Model
         'category_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

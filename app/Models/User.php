@@ -46,6 +46,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'wallet' => 'decimal:2',
         ];
     }
 

@@ -15,6 +15,13 @@ class Order extends Model
         'delivery_address',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'total_price' => 'decimal:2',
+        ];
+    }
+
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

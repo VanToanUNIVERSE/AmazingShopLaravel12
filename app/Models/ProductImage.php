@@ -12,6 +12,13 @@ class ProductImage extends Model
         'is_main',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'is_main' => 'boolean',
+        ];
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);

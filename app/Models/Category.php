@@ -11,6 +11,13 @@ class Category extends Model
         'active',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
+
     public function subcategories()
     {
         return $this->hasMany(Subcategory::class);
