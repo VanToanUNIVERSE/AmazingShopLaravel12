@@ -15,10 +15,18 @@ class LoginController extends Controller
 
     function login(Request $request)
     {
-        if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect()->route('home');
-        } else {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|min:8',
+        ]);
+        if(!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             return back()->withErrors(['login' => 'Sai tên đăng nhập hoặc mật khẩu.']);
         }
+        $request->session()->regenerate();
+        if(Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('home');
+        
     }
 }

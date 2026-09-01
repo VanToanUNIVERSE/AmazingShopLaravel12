@@ -14,4 +14,10 @@ Route::get('/home', function () {
     return view('client.home');
 })->name('home');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
+
 
