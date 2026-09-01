@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('price');
-            $table->string('hot');
+            $table->integer('hot');
             $table->string('description');
             $table->string('size'); // L, M, S, XL
             $table->integer('quantity');
