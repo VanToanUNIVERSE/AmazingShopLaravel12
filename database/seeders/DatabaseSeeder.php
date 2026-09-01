@@ -21,5 +21,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
         User::factory(5)->create();
+        $this->call([
+            CategorySeeder::class,
+            SubcategorySeeder::class,
+        ]);
     }
 }
