@@ -3,7 +3,11 @@
 @section('title', 'Quản lý danh mục')
 
 @section('content')
-    <h2 class="text-2xl font-bold mb-4">Quản lý danh mục</h2>
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Quản lý danh mục</h2>
+        <a href="{{ route('admin.categories.create') }}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Tạo danh mục mới</a>
+    </div>
+    
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="w-full text-left">

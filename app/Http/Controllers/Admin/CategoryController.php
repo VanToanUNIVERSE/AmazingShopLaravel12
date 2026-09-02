@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -30,7 +30,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'active' => 'required|boolean',
+        ]);
+
+        Category::create([
+            'name' => $request->name,
+            'active' => $request->active,
+        ]);
+        return back()->with('success', 'Đã thêm danh mục mới.');
     }
 
     /**
@@ -68,6 +77,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        
+        if($category->subcategories()->exists()) {
+            return back()->with('error', 'Không thể xóa danh mục có danh mục con.');
+        }
         $category->delete();
         return back()->with('success', 'Đã xóa danh mục.');
     }
