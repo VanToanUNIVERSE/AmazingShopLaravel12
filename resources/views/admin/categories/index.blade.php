@@ -25,11 +25,12 @@
                                 {{ $category->active ? 'Hiện' : 'Ẩn' }}
                             </span>
                             <select class="border rounded p-2 invisible">
-                                <option value="active" {{ $category->active ? 'selected' : '' }}>Hiện</option>
-                                <option value="inactive" {{ $category->active ? 'selected' : '' }}>Ẩn</option>
+                                <option value="1" {{ $category->active ? 'selected' : '' }}>Hiện</option>
+                                <option value="0" {{ $category->active ? 'selected' : '' }}>Ẩn</option>
                             </select>
                         </td>
                         <td class="px-4 py-3">
+                            <a href="{{ route('admin.categories.edit', $category->id) }}" class="p-3 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-700">Sửa</a>
                             <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')

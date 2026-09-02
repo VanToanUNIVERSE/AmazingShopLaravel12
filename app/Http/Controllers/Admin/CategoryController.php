@@ -44,17 +44,23 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'active' => 'required|boolean',
+        ]);
+
+        $category->update($request->only('name', 'active'));
+        return back()->with('success', 'Đã cập nhật danh mục.');
     }
 
     /**
