@@ -3,9 +3,6 @@
 @section('title', 'Thêm danh mục')
 
 @section('content')
-    @session('success')
-        <p class="text-green-500 text-sm mt-1">{{ session('success') }}</p>
-    @endsession
     <a href="{{ route('admin.categories.index') }}"
         class="inline-block mp-b p-3 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-700">Trở về</a>
     <h2 class="text-2xl font-bold">Thêm danh mục</h2>

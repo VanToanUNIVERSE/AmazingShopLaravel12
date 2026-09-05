@@ -79,7 +79,7 @@ class CategoryController extends Controller
     {
         
         if($category->subcategories()->exists()) {
-            return back()->with('error', 'Không thể xóa danh mục có danh mục con.');
+            return back()->withErrors(['general' => 'Không thể xóa danh mục này vì nó có danh mục con.']);
         }
         $category->delete();
         return back()->with('success', 'Đã xóa danh mục.');

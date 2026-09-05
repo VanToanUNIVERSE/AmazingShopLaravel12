@@ -17,6 +17,7 @@
         </div>
     </header>
     <main class="mx-auto p-6">
+        @include('partials.flash')
         @yield('content')
     </main>
     <footer class="bg-white shadow mt-6">
