@@ -3,7 +3,8 @@
 @section('title', 'Sửa danh mục')
 
 @section('content')
-    <a href="{{ route('admin.categories.index') }}" class="inline-block mp-b p-3 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-700">Trở về</a>
+    <a href="{{ route('admin.categories.index') }}"
+        class="inline-block mp-b p-3 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-700">Trở về</a>
     <h2 class="text-2xl font-bold mb-4">Sửa danh mục</h2>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -31,7 +32,29 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+                @foreach ($category->subcategories as $subcategory)
+                    <div class="mb-4">
+                        <label for="sub-name-{{ $subcategory->id }}" class="block text-sm font-medium text-gray-700">Tên danh
+                            mục con</label>
+                        <input type="text" name="subcategories[{{ $subcategory->id }}][name]"
+                            id="sub-name-{{ $subcategory->id }}"
+                            value="{{ old("subcategories.{$subcategory->id}.name", $subcategory->name) }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        @error('subcategories.' . $subcategory->id . '.name')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                        <select name="subcategories[{{ $subcategory->id }}][active]" id="sub-active-{{ $subcategory->id }}"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
 
+                            <option value="1" {{ old("subcategories.{$subcategory->id}.active", $subcategory->active) == 1 ? 'selected' : '' }}>Hiện</option>
+                            <option value="0" {{ old("subcategories.{$subcategory->id}.active", $subcategory->active) == 0 ? 'selected' : '' }}>Ẩn</option>
+
+                        </select>
+                        @error('subcategories.' . $subcategory->id . '.active')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endforeach
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Cập nhật</button>
             </div>
         </form>

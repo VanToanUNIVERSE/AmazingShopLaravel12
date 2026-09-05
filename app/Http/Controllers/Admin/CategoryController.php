@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use DB;
 
 
 
@@ -50,7 +51,20 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        DB::transaction(function () use ($request, $category) {
+            $category->update([
+                'name' => $request->validated('name'),
+                'active' => $request->validated('active')
+            ]);
+            $subcategoriesData = $request->validated('subcategories', []);
+            foreach ($subcategoriesData as $id => $subcategoryData) {
+                $category->subcategories()->where('id', $id)->update([
+                    'name' => $subcategoryData['name'],
+                    'active' => $subcategoryData['active'],
+                ]);
+            }
+        });
+
         return back()->with('success', 'Đã cập nhật danh mục.');
     }
 

@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
+    {
         return [
             'name' => [
                 'required',
@@ -32,6 +32,9 @@ class CategoryRequest extends FormRequest
                 $this->category ? Rule::unique('categories', 'name')->ignore($this->category) : Rule::unique('categories', 'name'),
             ],
             'active' => 'required|boolean',
+            'subcategories' => 'array',
+            'subcategories.*.name' => 'required|string|max:50|distinct:ignore_case',
+            'subcategories.*.active' => 'required|boolean',
         ];
     }
 }
