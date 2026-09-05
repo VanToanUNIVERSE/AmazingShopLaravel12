@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+
 
 
 class CategoryController extends Controller
@@ -30,27 +30,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:50|unique:categories,name',
-            'active' => 'required|boolean',
-        ]);
-
-        Category::create([
-            'name' => $request->name,
-            'active' => $request->active,
-        ]);
+        Category::create($request->validated());
         return back()->with('success', 'Đã thêm danh mục mới.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -63,19 +48,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:50',
-                Rule::unique('categories')->ignore($category->id),
-            ],
-            'active' => 'required|boolean',
-        ]);
-
-        $category->update($request->only('name', 'active'));
+        $category->update($request->validated());
         return back()->with('success', 'Đã cập nhật danh mục.');
     }
 
