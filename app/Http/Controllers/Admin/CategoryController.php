@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class CategoryController extends Controller
 {
@@ -31,7 +33,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:50|unique:categories,name',
             'active' => 'required|boolean',
         ]);
 
@@ -64,7 +66,12 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('categories')->ignore($category->id),
+            ],
             'active' => 'required|boolean',
         ]);
 
@@ -77,8 +84,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        
-        if($category->subcategories()->exists()) {
+
+        if ($category->subcategories()->exists()) {
             return back()->withErrors(['general' => 'Không thể xóa danh mục này vì nó có danh mục con.']);
         }
         $category->delete();
